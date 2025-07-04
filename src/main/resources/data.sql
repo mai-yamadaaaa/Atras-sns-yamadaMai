@@ -1,12 +1,65 @@
---初期ユーザー
-INSERT INTO users(username, email, password, bio, images) values
-('田中太郎','taro@exam.com','taro123','ゲームが好きです','images/icon1.png');
+-- 初期ユーザー（20人）
+INSERT INTO users(username, email, password, bio, images) VALUES
+('たろまる', 'taro@exam.com', 'taro123', 'MyfavoriteGame：FF2000／ゲーム中毒ですが何か？', 'images/icon1.png'),
+('のりぴー', 'noriko@exam.com', 'nori123', 'アニメは心の栄養。毎週3本は観てます。', 'images/icon1.png'),
+('じろまる先生', 'jirou@exam.com', 'jiro123', '朝はパンより論破。#日常にディベートを', 'images/icon1.png'),
+('キンちゃん', 'kinchann@exam.com', 'kin3', 'ドデカミンと共に人生を歩む男。', 'images/icon1.png'),
+('ミズきち', 'mizu@exam.com', 'mizumizu', '自称落語家。笑いの沼へようこそ。', 'images/icon1.png'),
+('たかしんぐ', 'takasi@exam.com', 'simasan', '誰か、僕の存在意義を教えて。', 'images/icon1.png'),
+('ゆみたび', 'yumi@exam.com', 'yumi123', '旅行→食べ過ぎ→後悔→また旅行。', 'images/icon2.png'),
+('マッスルけん', 'ken@exam.com', 'kenken', '筋トレしか勝たん💪週6ジム民', 'images/icon3.png'),
+('シネマまお', 'mao@exam.com', 'maomao', '1日1映画がルーティン。字幕派です。', 'images/icon4.png'),
+('ハヤト@テニス部', 'hayato@exam.com', 'hayahayato', '球拾いの神と呼ばれてました。', 'images/icon5.png'),
+('りょうサウナ部', 'ryo@exam.com', 'ryoryo', '整いすぎて逆にバグってる時ある。', 'images/icon6.png'),
+('さゆぴあの', 'sayuri@exam.com', 'sayusayu', '趣味：ピアノ。特技：猫の真似。', 'images/icon7.png'),
+('かつ勉', 'katsu@exam.com', 'katsu123', '毎日10分で資格100個取る予定。', 'images/icon8.png'),
+('ゆうこっち', 'yuko@exam.com', 'yuyuyu', 'ネイルとマカロンとちいかわが生きがい。', 'images/icon9.png'),
+('しょう犬派', 'sho@exam.com', 'shosho', '猫も好きだけど犬派なんだワン🐶', 'images/icon10.png'),
+('りさ読書部', 'risa@exam.com', 'risalisa', '本とカフェと曇り空があれば生きていける。', 'images/icon11.png'),
+('夜ふかしゲーマー', 'kenichi@exam.com', 'ken1', '寝落ち？いや徹夜だろ常識的に考えて。', 'images/icon12.png'),
+('ゆいぱん', 'yui@exam.com', 'yuyu123', 'パン作りの神に憑かれた女🍞', 'images/icon13.png'),
+('ヒカル＠絵描き', 'hikaru@exam.com', 'hikaru11', '描いて、病んで、また描いて。', 'images/icon14.png'),
+('さとる筋肉教', 'satoru@exam.com', 'satoru123', '筋肉がすべてを解決してくれる（たぶん）', 'images/icon15.png');
 
 
---初期投稿
-INSERT INTO posts(user_id, post) values
-('1','最初に触ったゲームはマリ男64です');
+-- 初期投稿（20件）
+INSERT INTO posts(user_id, post) VALUES
+(1,'最近ゲーム全然してないな〜'),
+(2, '今日はとても寒いですね〜'),
+(3, '生麦生米生卵の発音が難しい…'),
+(4, 'エナジードリンク最高！'),
+(5, '落語に関するイベントないかな？'),
+(6, '最近またゲーム実況始めました'),
+(7, '京都に旅行行ってきました！写真もあげたい'),
+(8, '腕トレのルーティン公開しようかな'),
+(9, 'トップガンマーヴェリック観た人いる？'),
+(10, '久しぶりに友達とテニスしてきた！'),
+(11, 'サウナ→水風呂→コーヒー＝天国'),
+(12, 'ピアノでジブリ練習してるよ〜'),
+(13, 'ITパスポート受けます！'),
+(14, 'ジェルネイルがキレイにできた✨'),
+(15, '最近は柴犬動画ばっか見てる'),
+(16, '読書記録アプリ作りたい'),
+(17, 'ゼルダ新作おもしろすぎる…'),
+(18, 'パン生地こねてる時が癒し'),
+(19, '久々に絵の展示会に行きました'),
+(20, 'プロテイン何飲んでる？おすすめ教えて！');
 
---初期FF関係
-INSERT INTO follows(following_id, followed_id) values
-('1','3');
+-- フォロー関係（バリエーション多めに）
+INSERT INTO follows(following_id, followed_id) VALUES
+(1, 2), (1, 3), (1, 4),
+(2, 1), (2, 5), (2, 6),
+(3, 1), (3, 7), (3, 8),
+(4, 9), (4, 10), (4, 2),
+(5, 3), (5, 6), (5, 7),
+(6, 8), (6, 1),
+(7, 10), (7, 11),
+(8, 1), (8, 13),
+(9, 2), (9, 3),
+(10, 5), (10, 4),
+(11, 12), (11, 14),
+(12, 13), (13, 15),
+(14, 16), (15, 17),
+(16, 18), (17, 19),
+(18, 20), (19, 1),
+(20, 6), (20, 9);
