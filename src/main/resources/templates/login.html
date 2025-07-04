@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	
+	<h1>Atlas</h1>
+	<p>Social Network Service</p>
+
+	<form action="/login" method="post">
+		<div>
+			<p>AtlasSNSへようこそ</p>
+		</div>
+		<div>
+			<p>メールアドレス</p>
+			<input type="text" name="email">
+			<p>パスワード</p>
+			<input type="text" name="password">
+		</div>
+		<button>ログイン</button>
+	</form>
+	<a src="/addAccount">新規ユーザの他はこちら</a>
 </body>
+
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="/addAccount" method="post">
+		<p>ユーザ名</p>
+		<input type="text" name="username">
+		
+		<p>メールアドレス</p>
+		<input type="email" name="email">
+		
+		<p>パスワード</p>
+		<input type="password" name="password">
+		
+		<p>パスワード(確認用)</p>
+		<input type="password" name="confirmPass">
+	</form>
+</body>
+</html>
