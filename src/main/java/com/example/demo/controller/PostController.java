@@ -61,8 +61,7 @@ public class PostController {
 
 	@GetMapping("/folow/post")
 	public String followPost(Model model) {
-		User user = userRepository.findById(myAccount.getId()).get();
-		Follow followList = followRepository.findByUser(user);
+		Follow followList = followRepository.findById(myAccount.getId()).get();
 		List<Post> posts = postRepository.findByUserId(followList.getFollowerId());
 
 		model.addAttribute("follows", followList.getFollowId());
@@ -72,8 +71,7 @@ public class PostController {
 
 	@GetMapping("follower/post")
 	public String followerPost(Model model) {
-		User user = userRepository.findById(myAccount.getId()).get();
-		Follow followerList = followRepository.findByUser(user);
+		Follow followerList = followRepository.findById(myAccount.getId()).get();
 		List<Post> posts = postRepository.findByUserId(followerList.getFollowerId());
 
 		model.addAttribute("followerList", followerList);
@@ -86,4 +84,5 @@ public class PostController {
 
 		return "userSearch";
 	}
+
 }

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +22,12 @@ public class UserController {
 	@Autowired
 	MyAccount myAccount;
 
+	@Autowired
+	HttpSession session;
+
 	@GetMapping({ "/", "/login", "/logout" })
 	public String loginPage() {
+		session.invalidate();
 		return "login";
 	}
 
@@ -89,4 +95,5 @@ public class UserController {
 
 		return "redirect:/login";
 	}
+
 }
