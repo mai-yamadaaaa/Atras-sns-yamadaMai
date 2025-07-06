@@ -18,10 +18,10 @@ public class Follow {
 	private Long id;
 
 	@Column(name = "following_id", nullable = false)
-	private Long followingId;
+	private Long followId;
 
 	@Column(name = "followed_id", nullable = false)
-	private Long followedId;
+	private Long followerId;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
@@ -35,12 +35,12 @@ public class Follow {
 		return id;
 	}
 
-	public Long getFollowingId() {
-		return followingId;
+	public Long getFollowId() {
+		return followId;
 	}
 
-	public Long getFollowedId() {
-		return followedId;
+	public Long getFollowerId() {
+		return followerId;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -56,12 +56,12 @@ public class Follow {
 		this.id = id;
 	}
 
-	public void setFollowingId(Long followingId) {
-		this.followingId = followingId;
+	public void setFollowId(Long followingId) {
+		this.followId = followingId;
 	}
 
-	public void setFollowedId(Long followedId) {
-		this.followedId = followedId;
+	public void setFollowerId(Long followedId) {
+		this.followerId = followedId;
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +19,9 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "user_id", nullable = false)
-	private Long userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column(nullable = false, length = 400)
 	private String post;
@@ -35,10 +38,6 @@ public class Post {
 		return id;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
 	public String getPost() {
 		return post;
 	}
@@ -51,13 +50,13 @@ public class Post {
 		return updatedAt;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
 	//setter
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public void setPost(String post) {
@@ -70,6 +69,10 @@ public class Post {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -52,11 +52,13 @@ public class UserController {
 		return "createAccount";
 	}
 
+	@PostMapping("/addAccount")
 	public String createAccount(
 			@RequestParam(name = "username", defaultValue = "") String username,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			@RequestParam(name = "confirmPass", defaultValue = "") String confirmPass,
+
 			Model model) {
 
 		if (username.isEmpty() || email.isEmpty() ||
@@ -64,11 +66,9 @@ public class UserController {
 
 			if (username.isEmpty()) {
 				model.addAttribute("nameMassage", "ユーザ名を入力してください");
-			}
-			if (email.isEmpty()) {
+			} else if (email.isEmpty()) {
 				model.addAttribute("emailMessage", "メールアドレスを入力してください");
-			}
-			if (password.isEmpty() || confirmPass.isEmpty()) {
+			} else if (password.isEmpty() || confirmPass.isEmpty()) {
 				model.addAttribute("passMessage", "パスワードを入力してください");
 			}
 			return "createAccount";
@@ -84,6 +84,8 @@ public class UserController {
 		user.setUsername(username);
 		user.setEmail(email);
 		user.setPassword(password);
+
+		userRepository.save(user);
 
 		return "redirect:/login";
 	}
