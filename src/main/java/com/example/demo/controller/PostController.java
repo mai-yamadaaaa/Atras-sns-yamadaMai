@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +62,27 @@ public class PostController {
 
 	@GetMapping("/folow/post")
 	public String followPost(Model model) {
-		Follow followList = followRepository.findById(myAccount.getId()).get();
-		List<Post> posts = postRepository.findByUserId(followList.getFollowerId());
+		List<Follow> follows = followRepository.findByFollowId(myAccount.getId());
+		List<Post> posts = new ArrayList<>();
 
-		model.addAttribute("follows", followList.getFollowId());
+		for (Follow follow : follows) {
+			posts.addAll(postRepository.findByUserId(follow.getFollowerId()));
+		}
+
+		model.addAttribute("follows", follows);
 		model.addAttribute("posts", posts);
 		return "followPost";
 	}
 
 	@GetMapping("follower/post")
 	public String followerPost(Model model) {
-		Follow followerList = followRepository.findById(myAccount.getId()).get();
-		List<Post> posts = postRepository.findByUserId(followerList.getFollowerId());
+		List<Follow> followers = followRepository.findByFollowerId(myAccount.getId());
+		List<Post> posts = new ArrayList<>();
+		for (Follow follower : followers) {
+			posts.addAll(postRepository.findByUserId(follower.getFollowerId()));
+		}
 
-		model.addAttribute("followerList", followerList);
+		model.addAttribute("followers", followers);
 		model.addAttribute("posts", posts);
 		return "followerPost";
 	}
