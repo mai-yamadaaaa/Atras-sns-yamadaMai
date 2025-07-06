@@ -9,6 +9,7 @@ public class MyAccount {
 
 	private Long id;
 	private String name;
+	private String images;
 
 	//getter
 	public Long getId() {
@@ -19,6 +20,10 @@ public class MyAccount {
 		return name;
 	}
 
+	public String getImages() {
+		return images;
+	}
+
 	//setter
 	public void setId(Long id) {
 		this.id = id;
@@ -26,6 +31,10 @@ public class MyAccount {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setImages(String images) {
+		this.images = images;
 	}
 
 }
