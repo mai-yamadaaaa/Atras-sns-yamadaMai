@@ -60,17 +60,23 @@ public class PostController {
 		return "redirect:topPage";
 	}
 
-	@GetMapping("/folow/post")
+	@GetMapping("/follow/post")
 	public String followPost(Model model) {
 		List<Follow> follows = followRepository.findByFollowId(myAccount.getId());
 		List<Post> posts = new ArrayList<>();
+		List<User> users = new ArrayList<>();
 
 		for (Follow follow : follows) {
+			// フォローしているユーザーの投稿をすべて追加
 			posts.addAll(postRepository.findByUserId(follow.getFollowerId()));
+
+			// ユーザー情報も取得してリストに追加
+			userRepository.findById(follow.getFollowerId()).ifPresent(users::add);
 		}
 
 		model.addAttribute("follows", follows);
 		model.addAttribute("posts", posts);
+		model.addAttribute("users", users);
 		return "followPost";
 	}
 
@@ -78,12 +84,18 @@ public class PostController {
 	public String followerPost(Model model) {
 		List<Follow> followers = followRepository.findByFollowerId(myAccount.getId());
 		List<Post> posts = new ArrayList<>();
+		List<User> users = new ArrayList<>();
+
 		for (Follow follower : followers) {
-			posts.addAll(postRepository.findByUserId(follower.getFollowerId()));
+			posts.addAll(postRepository.findByUserId(follower.getFollowId()));
+
+			// ユーザー情報も取得してリストに追加
+			userRepository.findById(follower.getFollowId()).ifPresent(users::add);
 		}
 
 		model.addAttribute("followers", followers);
 		model.addAttribute("posts", posts);
+		model.addAttribute("users", users);
 		return "followerPost";
 	}
 

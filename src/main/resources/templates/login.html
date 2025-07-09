@@ -16,14 +16,15 @@
 			<p>AtlasSNSへようこそ</p>
 		</div>
 		<div>
+			<p style="color: red;" th:text="${message}" th:if="${message}"></p>
 			<p>メールアドレス</p>
 			<input type="text" name="email">
 			<p>パスワード</p>
-			<input type="text" name="password">
+			<input type="password" name="password">
 		</div>
 		<button>ログイン</button>
 	</form>
-	<a src="/addAccount">新規ユーザの他はこちら</a>
+	<a href="/addAccount">新規ユーザの方はこちら</a>
 </body>
 
 </html>

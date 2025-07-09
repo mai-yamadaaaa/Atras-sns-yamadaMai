@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -91,9 +92,21 @@ public class UserController {
 		user.setEmail(email);
 		user.setPassword(password);
 
+		myAccount.setName(user.getUsername());
 		userRepository.save(user);
 
-		return "redirect:/login";
+		return "redirect:/conpleteCreate";
+	}
+
+	@GetMapping("/conpleteCreate")
+	public String conpleteCreate() {
+		return "loginConplete";
+	}
+
+	@GetMapping("/user/{id}/detail")
+	public String showUserDetail(@PathVariable(name = "id") Long id, Model model) {
+
+		return "userDetail";
 	}
 
 }
