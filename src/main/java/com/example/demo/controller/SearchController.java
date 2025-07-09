@@ -37,7 +37,7 @@ public class SearchController {
 			Model model) {
 
 		User myUser = userRepository.findById(myAccount.getId()).get();
-		List<User> searchUser = userRepository.findByUsernameContaning(keyword);
+		List<User> searchUser = userRepository.findByUsernameContaining(keyword);
 
 		List<Follow> followSearch = followRepository.findByFollowId(myUser.getId());
 
@@ -48,4 +48,5 @@ public class SearchController {
 	//	public String showOtherAccount() {
 	//		
 	//	}
+
 }

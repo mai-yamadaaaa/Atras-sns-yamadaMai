@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>[[${@myAccount.name}]]さん</p>
+	<p>ようこそ！AtlasSNSへ</p>
+	
+	<p>ユーザ登録が完了いたしました。</p>
+	<p>早速ログインをしてみましょう！</p>
+	
+	<form action="/login" method="get">
+	<button>ログイン画面へ</button>
+	</form>
+</body>
+</html>
