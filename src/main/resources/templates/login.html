@@ -7,11 +7,12 @@
 </head>
 
 <body>
-	
-	<h1>Atlas</h1>
-	<p>Social Network Service</p>
+	<div>
+		<img th:src="@{/images/content/atlas.png}" style="background-color: black;">
+		<p>Social Network Service</p>
+	</div>
 
-	<form action="/login" method="post">
+	<form yh:action="@{/login}" method="post">
 		<div>
 			<p>AtlasSNSへようこそ</p>
 		</div>
@@ -24,7 +25,7 @@
 		</div>
 		<button>ログイン</button>
 	</form>
-	<a href="/addAccount">新規ユーザの方はこちら</a>
+	<a th:href="@{/user/create}">新規ユーザの方はこちら</a>
 </body>
 
 </html>

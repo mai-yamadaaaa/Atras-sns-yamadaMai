@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
@@ -12,6 +13,7 @@ import com.example.demo.model.MyAccount;
 import com.example.demo.repository.UserRepository;
 
 @Controller
+@RequestMapping("/mypage")
 public class MypageController {
 
 	@Autowired
@@ -20,17 +22,17 @@ public class MypageController {
 	@Autowired
 	MyAccount myAccount;
 
-	@GetMapping("/myPage")
+	@GetMapping("/profile")
 	public String showMyPage(Model model) {
 
 		User user = userRepository.findById(myAccount.getId()).get();
 		model.addAttribute("user", user);
 
-		return "myPage";
+		return "myprofile";
 	}
 
-	@PostMapping("/myPage")
-	public String editMyPage(
+	@PostMapping("/profile")
+	public String editProfile(
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password,
@@ -47,7 +49,7 @@ public class MypageController {
 		user.setBio(bio);
 		user.setImages(image);
 
-		return "redirect:/myPage";
+		return "redirect:/profile";
 	}
 
 }

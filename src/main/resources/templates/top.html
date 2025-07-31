@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<!-- ヘッダー -->
+	<div th:replace="header"></div>
+	<div>
+		<form th:action="@{/post}" method="post">
+			<div>
+				<img th:src="@{'/images/icon/' + ${user.images}}">
+			</div>
+			<div>
+				<textarea name="post" placeholder="投稿内容を入力してください"></textarea>
+			</div>
+			<div>
+				<button type="submit">
+					<img th:src="@{/images/content/post.png}">
+				</button>
+			</div>
+		</form>
+	</div>
+	<div>
+		<div th:if="${posts}" th:each="post : ${posts}">
+			<div th:if="${@myAccount.id != post.user.id}">
+				<img name="user_icon" th:src="@{'/images/icon/' + ${post.user.images}}">
+				<p th:text="${post.post}"></p>
+				<p th:text="${#temporals.format(post.updatedAt, 'yyyy/mm/dd')}"></p>
+			</div>
+			<div th:if="${@myAccount.id == post.user.id}">
+				<img name="user_icon" th:src="@{'/images/icon/' + ${post.user.images}}">
+				<p th:text="${post.post}"></p>
+				<p th:text="${#temporals.format(post.updatedAt, 'yyyy/mm/dd')}"></p>
+				<div>
+					<form th:action="@{/post/edit}" method="post">
+						<input type="hidden" name="id" th:value="${post.id}">
+						<input type="hidden" name="post" th:value="${post.post}">
+						<button><img th:src="@{/images/content/edit.png}"></button>
+					</form>
+					<form th:action="@{/post/delete}" method="post">
+						<input type="hidden" name="id" th:value="${post.id}">
+						<button><img th:src="@{/images/content/trash.png}"></button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			
+		</script>
+	</div>
+	<div>
+		<p th:text="${@myAccount.name}+さんの"></p>
+		<form th:action="@{/follow/posts}" method="get">
+			<p>フォロー数</p>
+			<p></p>
+			<button type="submit">フォローリスト</button>
+		</form>
+		<form th:action="@{/follower/posts}" method="get">
+			<p>フォロワー数</p>
+			<p></p>
+			<button type="submit">フォロワーリスト</button>
+		</form>
+		<a th:href="@{/user/search}">ユーザー検索</a>
+	</div>
+</body>
+
+</html>

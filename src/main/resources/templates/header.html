@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>ヘッダー</title>
-</head>
-<body>
-<header></header>
-</body>
-</html>
+<header>
+	<a th:href="@{/top}">
+		<img th:src="@{/images/content/atlas.png}" style="background-color: black;">
+	</a>
+
+	<div>
+		<img th:src="@{'/images/icon/' + ${@myAccount.images}}">
+		<details>
+			<summary><span th:text="${@myAccount.name} + 'さん'"></span></summary>
+			<a th:href="@{/top}">HOME</a>
+			<a th:href="@{/profile}">プロフィール編集</a>
+			<a th:href="@{/logout}">ログアウト</a>
+		</details>
+	</div>
+</header>

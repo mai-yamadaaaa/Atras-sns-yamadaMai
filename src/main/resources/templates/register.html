@@ -8,25 +8,34 @@
 
 <body>
 	<div>
+		<img th:src="@{/images/content/atlas.png}" style="background-color: black;">
+		<p>Social Network Service</p>
+	</div>
+	
+	<div>
 		<p>新規ユーザ登録</p>
 	</div>
-	<form action="/addAccount" method="post">
+	<form th:action="@{/user/create}" method="post">
 		<p>ユーザ名</p>
+		<span th:text="${nameMassage}"></span>
 		<input type="text" name="username">
 
 		<p>メールアドレス</p>
+		<span th:text="${emailMessage}"></span>
 		<input type="email" name="email">
 
 		<p>パスワード</p>
+		<span th:text="${passMessage}"></span>
 		<input type="password" name="password">
 
 		<p>パスワード(確認用)</p>
+		<span th:text="${confirmPassMessage}"></span>
 		<input type="password" name="confirmPass">
 		
 		<button>新規登録</button>
 	</form>
 
-	<a href="/login">ログイン画面に戻る</a>
+	<a th:href="@{/login}">ログイン画面に戻る</a>
 </body>
 
 </html>
