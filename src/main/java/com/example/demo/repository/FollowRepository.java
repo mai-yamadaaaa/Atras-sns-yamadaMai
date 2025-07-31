@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.Follow;
+import com.example.demo.entity.User;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-	List<Follow> findByFollowId(Long id);
+	List<Follow> findByFollowing(User user);
 
-	List<Follow> findByFollowerId(Long id);
+	List<Follow> findByFollowed(User user);
 }

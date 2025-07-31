@@ -5,14 +5,18 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div>
+		<img th:src="@{/images/content/atlas.png}" style="background-color: black;">
+		<p>Social Network Service</p>
+	</div>
 	<p>[[${@myAccount.name}]]さん</p>
 	<p>ようこそ！AtlasSNSへ</p>
 	
 	<p>ユーザ登録が完了いたしました。</p>
 	<p>早速ログインをしてみましょう！</p>
 	
-	<form action="/login" method="get">
-	<button>ログイン画面へ</button>
-	</form>
+
+	<a th:href="@{/login}">ログイン画面へ</a>
+
 </body>
 </html>

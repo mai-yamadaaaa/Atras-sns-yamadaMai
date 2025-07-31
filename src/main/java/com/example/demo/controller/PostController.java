@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class PostController {
 	@Autowired
 	FollowRepository followRepository;
 
-	@GetMapping("/topPage")
+	@GetMapping("/top")
 	public String showTopPage(Model model) {
 		User user = userRepository.findById(myAccount.getId()).get();
 		List<Post> allPost = postRepository.findAll();
@@ -40,69 +41,73 @@ public class PostController {
 		model.addAttribute("user", user);
 		model.addAttribute("posts", allPost);
 
-		return "topPage";
+		return "top";
 	}
 
-	@PostMapping("/topPage")
+	@PostMapping("/post")
 	public String createPost(
-			@RequestParam(name = "myPost") String myPost, Model model) {
+			@RequestParam(name = "post") String post, Model model) {
 
 		User user = userRepository.findById(myAccount.getId()).get();
 
 		Post postAdd = new Post();
 		postAdd.setUser(user);
-		postAdd.setPost(myPost);
+		postAdd.setPost(post);
 
 		postRepository.save(postAdd);
-
 		model.addAttribute("user", user);
 
-		return "redirect:topPage";
+		return "redirect:/top";
 	}
 
-	@GetMapping("/follow/post")
+	@PostMapping("/post/delete")
+	public String deletePost(@RequestParam(name = "id") Long id) {
+		postRepository.deleteById(id);
+
+		return "redirect:/top";
+	}
+
+	@PostMapping("/post/edit")
+	public String editPost(@RequestParam(name = "id") Long id,
+			@RequestParam(name = "post") String post,
+			Model model) {
+		Post mypost = postRepository.findById(id).get();
+		mypost.setPost(post);
+		mypost.setUpdatedAt(LocalDateTime.now());
+		postRepository.save(mypost);
+
+		return "redirect:/top";
+	}
+
+	@GetMapping("/follow/posts")
 	public String followPost(Model model) {
-		List<Follow> follows = followRepository.findByFollowId(myAccount.getId());
+		User myUser = userRepository.findById(myAccount.getId()).get();
+		List<Follow> follows = followRepository.findByFollowing(myUser);
 		List<Post> posts = new ArrayList<>();
-		List<User> users = new ArrayList<>();
 
 		for (Follow follow : follows) {
-			// フォローしているユーザーの投稿をすべて追加
-			posts.addAll(postRepository.findByUserId(follow.getFollowerId()));
-
-			// ユーザー情報も取得してリストに追加
-			userRepository.findById(follow.getFollowerId()).ifPresent(users::add);
+			posts.addAll(postRepository.findByUser(follow.getFollowed()));
 		}
 
 		model.addAttribute("follows", follows);
 		model.addAttribute("posts", posts);
-		model.addAttribute("users", users);
-		return "followPost";
+		return "follow_list";
 	}
 
-	@GetMapping("follower/post")
+	@GetMapping("/follower/posts")
 	public String followerPost(Model model) {
-		List<Follow> followers = followRepository.findByFollowerId(myAccount.getId());
+		User myUser = userRepository.findById(myAccount.getId()).get();
+		List<Follow> followers = followRepository.findByFollowed(myUser);
 		List<Post> posts = new ArrayList<>();
-		List<User> users = new ArrayList<>();
 
 		for (Follow follower : followers) {
-			posts.addAll(postRepository.findByUserId(follower.getFollowId()));
-
-			// ユーザー情報も取得してリストに追加
-			userRepository.findById(follower.getFollowId()).ifPresent(users::add);
+			posts.addAll(postRepository.findByUser(follower.getFollowing()));
 		}
 
 		model.addAttribute("followers", followers);
 		model.addAttribute("posts", posts);
-		model.addAttribute("users", users);
-		return "followerPost";
-	}
 
-	@GetMapping("user/search")
-	public String userSearch(Model model) {
-
-		return "userSearch";
+		return "follower_list";
 	}
 
 }

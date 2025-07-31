@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Post;
 import com.example.demo.entity.User;
 import com.example.demo.model.MyAccount;
+import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 
 @Controller
@@ -19,6 +24,8 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	PostRepository postRepository;
 
 	@Autowired
 	MyAccount myAccount;
@@ -26,9 +33,9 @@ public class UserController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping({ "/", "/login", "/logout" })
+	@GetMapping({ "/login", "/logout" })
 	public String loginPage() {
-		session.invalidate();
+		session.removeAttribute("myAccount"); // ← セッション全体を消さず、ログイン情報だけクリア
 		return "login";
 	}
 
@@ -50,22 +57,22 @@ public class UserController {
 
 		myAccount.setId(user.getId());
 		myAccount.setName(user.getUsername());
+		myAccount.setImages(user.getImages());
 
-		return "redirect:/topPage";
+		return "redirect:/top";
 	}
 
-	@GetMapping("/addAccount")
+	@GetMapping("/user/create")
 	public String createAccountPage() {
-		return "createAccount";
+		return "register";
 	}
 
-	@PostMapping("/addAccount")
+	@PostMapping("/user/create")
 	public String createAccount(
 			@RequestParam(name = "username", defaultValue = "") String username,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			@RequestParam(name = "confirmPass", defaultValue = "") String confirmPass,
-
 			Model model) {
 
 		if (username.isEmpty() || email.isEmpty() ||
@@ -78,12 +85,12 @@ public class UserController {
 			} else if (password.isEmpty() || confirmPass.isEmpty()) {
 				model.addAttribute("passMessage", "パスワードを入力してください");
 			}
-			return "createAccount";
+			return "register";
 		}
 
 		if (!password.equals(confirmPass)) {
-			model.addAttribute("passMessage", "パスワードが一致しません");
-			return "createAccount";
+			model.addAttribute("confirmPassMessage", "パスワードが一致しません");
+			return "register";
 		}
 
 		User user = new User();
@@ -95,18 +102,35 @@ public class UserController {
 		myAccount.setName(user.getUsername());
 		userRepository.save(user);
 
-		return "redirect:/conpleteCreate";
+		return "redirect:/user/create/conplete";
 	}
 
-	@GetMapping("/conpleteCreate")
+	@GetMapping("/user/create/conplete")
 	public String conpleteCreate() {
-		return "loginConplete";
+		return "register_conplete";
 	}
 
 	@GetMapping("/user/{id}/detail")
 	public String showUserDetail(@PathVariable(name = "id") Long id, Model model) {
+		User user = userRepository.findById(id).get();
+		List<Post> posts = postRepository.findByUser(user);
 
-		return "userDetail";
+		model.addAttribute("posts", posts);
+		model.addAttribute("user", user);
+		return "user_detail";
+	}
+
+	@GetMapping("/user/search")
+	public String userSearchPage(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+		List<User> users = new ArrayList<>();
+		if (keyword != null && !keyword.isEmpty()) {
+			users = userRepository.findByUsernameContaining(keyword);
+		} else {
+			users = userRepository.findByIdNot(myAccount.getId());
+		}
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("users", users);
+		return "user_search";
 	}
 
 }

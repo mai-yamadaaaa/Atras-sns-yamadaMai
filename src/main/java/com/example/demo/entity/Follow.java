@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,11 +19,13 @@ public class Follow {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "following_id", nullable = false)
-	private Long followId;
+	@ManyToOne
+	@JoinColumn(name = "following_id", nullable = false)
+	private User following;
 
-	@Column(name = "followed_id", nullable = false)
-	private Long followerId;
+	@ManyToOne
+	@JoinColumn(name = "followed_id", nullable = false)
+	private User followed;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
@@ -35,12 +39,12 @@ public class Follow {
 		return id;
 	}
 
-	public Long getFollowId() {
-		return followId;
+	public User getFollowing() {
+		return following;
 	}
 
-	public Long getFollowerId() {
-		return followerId;
+	public User getFollowed() {
+		return followed;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -56,12 +60,12 @@ public class Follow {
 		this.id = id;
 	}
 
-	public void setFollowId(Long followingId) {
-		this.followId = followingId;
+	public void setFollowing(User following) {
+		this.following = following;
 	}
 
-	public void setFollowerId(Long followedId) {
-		this.followerId = followedId;
+	public void setFollowerId(User followed) {
+		this.followed = followed;
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
